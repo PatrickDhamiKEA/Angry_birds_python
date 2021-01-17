@@ -1,8 +1,13 @@
+from random import randint
+
+
 class Bird:
+    random_pos = [randint(0, 9), randint(0, 4)]
+    start_pos = random_pos
+    current_pos = random_pos
+
     def __init__(self):
         self.bird_marker = 'B'
-        self.start_pos = (2, 2)
-        self.current_pos = [2, 2]
         self.dir_right = True
         self.dir_left = False
         self.dir_up = False
@@ -73,8 +78,10 @@ class Bird:
 
 
 class Pig:
+    random_pig_pos = [randint(0, 9), randint(5, 9)]
+    pos = random_pig_pos
+
     def __init__(self):
-        self.pos = (6, 6)
         self.pig_marker = 'P'
 
     def pig_lost(self):
@@ -135,12 +142,12 @@ class Workspace:
         Workspace.check_result(self)
 
     def check_result(self):
-        if tuple(self.bird.current_pos) == self.pig.pos:
-            print('Birds final position: ', tuple(self.bird.current_pos))
+        if self.bird.current_pos == self.pig.pos:
+            print('Birds final position: ', self.bird.current_pos)
             print('Pigs final position: ', self.pig.pos)
             self.pig.pig_lost()
         else:
-            print('Birds final position: ', tuple(self.bird.current_pos))
+            print('Birds final position: ', self.bird.current_pos)
             print('Pigs final position: ', self.pig.pos)
             self.bird.bird_lost()
 
