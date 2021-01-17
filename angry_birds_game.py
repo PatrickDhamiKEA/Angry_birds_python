@@ -68,18 +68,22 @@ class Bird:
         elif self.dir_down:
             self.current_pos[0] = self.current_pos[0] + 1
 
+    def bird_lost(self):
+        print("Pig won the game and Bird lost")
+
 
 class Pig:
-    pig_marker = 'P'
-
     def __init__(self):
         self.pos = (6, 6)
+        self.pig_marker = 'P'
+
+    def pig_lost(self):
+        print("Bird won the game and Pig lost")
 
 
 class Board:
-    board = [['*' for i in range(10)] for i in range(10)]
-
     def __init__(self):
+        self.board = [['*' for i in range(10)] for i in range(10)]
         self.bird = Bird()
         self.pig = Pig()
 
@@ -131,24 +135,14 @@ class Workspace:
         Workspace.check_result(self)
 
     def check_result(self):
-        if self.bird.current_pos[0] < 0 or \
-                self.bird.current_pos[0] > 9 or \
-                self.bird.current_pos[1] < 0 or \
-                self.bird.current_pos[1] > 9:
+        if tuple(self.bird.current_pos) == self.pig.pos:
             print('Birds final position: ', tuple(self.bird.current_pos))
             print('Pigs final position: ', self.pig.pos)
-            print('Bird lost')
-            print('Pig won')
-        elif tuple(self.bird.current_pos) != self.pig.pos:
-            print('Birds final position: ', tuple(self.bird.current_pos))
-            print('Pigs final position: ', self.pig.pos)
-            print('Bird lost')
-            print('Pig won')
+            self.pig.pig_lost()
         else:
             print('Birds final position: ', tuple(self.bird.current_pos))
             print('Pigs final position: ', self.pig.pos)
-            print('Bird won')
-            print('Pig lost')
+            self.bird.bird_lost()
 
 
 class Game:
